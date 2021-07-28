@@ -1,0 +1,22 @@
+import com.example.model.TaxiRide;
+import com.example.model.Fare;
+import java.util.*;
+
+global com.example.model.Fare rideFare;
+dialect "mvel"
+
+rule "Calculate Taxi Fare - Scenario 1"
+	when
+		taxRideInstance:TaxiRide(isNightSurcharge == false && distanceInMile < 10);
+	then
+		rideFare.setNightSurcharge(0);
+		rideFare.setRideFare(70);
+end
+
+rule "Calculate Taxi Fare - Scenario 2"
+	when
+		taxRideInstance:TaxiRide(isNightSurcharge == true && distanceInMile < 10);
+	then
+		rideFare.setNightSurcharge(10);
+		rideFare.setRideFare(70);
+end
